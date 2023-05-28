@@ -4,7 +4,7 @@
         <div class="block-header">
             <div class="row">
                 <div class="col-lg-7 col-md-6 col-sm-12">
-                    <h2>Add Property
+                    <h2>Update Property Details
                         <small class="text-muted">Jhomes Ltd Admin</small>
                     </h2>
                 </div>
@@ -16,14 +16,14 @@
                         <li class="breadcrumb-item"><router-link to="/"><i class="zmdi zmdi-home"></i> Jhomes</router-link>
                         </li>
                         <li class="breadcrumb-item"><router-link to="/propertylist">Property</router-link></li>
-                        <li class="breadcrumb-item active">Add Property</li>
+                        <li class="breadcrumb-item active">Update</li>
                     </ul>
                 </div>
             </div>
         </div>
         <div class="container-fluid">
             <div class="row clearfix">
-                <form @submit.prevent="addProperty()" action="">
+                <form @submit.prevent="updateProperty()" action="">
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="header">
@@ -34,22 +34,27 @@
                                 <div class="row clearfix">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Property title"
-                                                v-model="property.title">
+                                            <label for="property" class="form-label"
+                                                >Property Title</label>
+                                            <input type="text" class="form-control" v-model="property.title">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Property Location"
-                                                v-model="property.location">
+                                            <label for="property" class="form-label"
+                                                >Location</label>
+                                            <input type="text" class="form-control" v-model="property.location"
+                                               >
 
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <div class="form-line">
+                                                <label for="property" class="form-label"
+                                                >Description</label>
                                                 <textarea rows="4" class="form-control no-resize"
-                                                    placeholder="Property Description" v-model="property.desc"></textarea>
+                                                v-model="property.desc"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -66,8 +71,8 @@
                                     <div class="col-xs-12 col-sm-6">
                                         <div class="form-group">
                                             <label for="itemN-23">Property Type</label>
-                                            <select data-placeholder="Select Option" class="chosen-select" id="itemN-23"
-                                                v-model="property.type">
+                                            <select data-placeholder="Select Option" class="chosen-select" id="itemN-23" v-model="property.type"
+                                               >
                                                 <option value="1">Villa</option>
                                                 <option value="2">Apartment</option>
                                                 <option value="2">Home</option>
@@ -77,8 +82,10 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Price / Rent"
-                                                v-model="property.price">
+                                            <label for="property" class="form-label"
+                                                >Price</label>
+                                            <input type="text" class="form-control" v-model="property.price"
+                                              >
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
@@ -91,26 +98,34 @@
                                 <div class="row clearfix">
                                     <div class="col-lg-3 col-dm-3 col-sm-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Bedrooms"
-                                                v-model="property.bedroom">
+                                            <label for="property" class="form-label"
+                                                >Bedrooms</label>
+                                            <input type="text" class="form-control" v-model="property.bedroom"
+                                                >
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-dm-3 col-sm-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Square ft"
-                                                v-model="property.size">
+                                            <label for="property" class="form-label"
+                                                >Size</label>
+                                            <input type="text" class="form-control" v-model="property.size"
+                                              >
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-dm-3 col-sm-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Car Parking"
-                                                v-model="property.garage">
+                                            <label for="property" class="form-label"
+                                                >Parking Space</label>
+                                            <input type="text" class="form-control" v-model="property.garage"
+                                               >
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-dm-3 col-sm-6">
                                         <div class="form-group">
-                                            <input type="text" class="form-control" placeholder="Bathroom"
-                                                v-model="property.bathroom">
+                                            <label for="property" class="form-label"
+                                                >Bathrooms</label>
+                                            <input type="text" class="form-control" v-model="property.bathroom"
+                                            >
                                         </div>
                                     </div>
                                 </div>
@@ -135,8 +150,7 @@
                                         </form>
                                     </div>
                                     <div class="col-sm-12">
-                                        <button type="submit" class="btn btn-primary btn-round">Submit</button>
-                                        <button type="submit" class="btn btn-default btn-round btn-simple">Cancel</button>
+                                        <button type="submit" class="btn btn-primary btn-round">Update</button>
                                     </div>
                                 </div>
                             </div>
@@ -150,7 +164,56 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
+    data() {
+        return {
+            property: {
+                title: "",
+                location: "",
+                desc: "",
+                price: "",
+                bedroom: "",
+                bathroom: "",
+                size: "",
+                type: "",
+                garage: "",
+            },
+        };
+        
+    },
+    created(){
+        this.getProperty()   
+    },
+
+    methods: {
+        async getProperty() {
+            let id = this.$route.params.id;
+            await axios.get(`property/${id}`).then((res) => {
+                this.property = res.data;
+                console.log(res.data)
+            });
+        },
+
+        async updateProperty() {
+            let id = this.$route.params.id;
+            await axios.put(`property/${id}`, this.property).then((res) => {
+                console.log(res.message);
+                this.property = {
+                    title: "",
+                    location: "",
+                    desc: "",
+                    price: "",
+                    bedroom: "",
+                    bathroom: "",
+                    size: "",
+                    type: "",
+                    garage: "",
+                };
+            });
+            // this.$router.replace("/propertyList")
+        }
+    }
 
 }
 </script>

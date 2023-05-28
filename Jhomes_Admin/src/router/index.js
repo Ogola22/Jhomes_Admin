@@ -30,9 +30,9 @@ const router = createRouter({
       component:()=>import('../views/Agents/AgentsView.vue')
     },
     {
-      path: '/editproperty',
-      name: '/editproperty',
-      component:()=>('../views/Property/EditProperty.vue')
+      path: '/property/:id/edit',
+      name: 'editproperty',
+      component:()=> import('../views/Property/EditProperty.vue')
     }
 
   ]

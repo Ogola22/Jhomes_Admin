@@ -1,6 +1,6 @@
 <template>
     
-    <property-component :properties="properties"></property-component>
+    <property-component :property="property"></property-component>
     
 </template>
 
@@ -12,7 +12,7 @@ export default {
 
     data() {
         return {
-            properties: []
+            property: []
         };
     },
     created() {
@@ -21,7 +21,7 @@ export default {
     methods: {
         getProperty() {
             axios.get('properties').then(res => {
-                this.properties = res.data;
+                this.property = res.data;
                 console.log(res.data)
             })
         }
