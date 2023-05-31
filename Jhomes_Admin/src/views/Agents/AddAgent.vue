@@ -20,7 +20,7 @@
                 </div>
             </div>
         </div>
-        <form action="">
+        <form action="" @submit="submitForm" enctype="multipart/form-data">
             <div class="container-fluid">
                 <div class="row clearfix">
 
@@ -56,7 +56,7 @@
                                         </div>
                                     </div>
                                     <div class="col-sm-3">
-                                        <select class="form-control show-tick">
+                                        <select class="form-control show-tick" v-model="agent.gender">
                                             <option value="">-- Gender --</option>
                                             <option value="1">Male</option>
                                             <option value="2">Female</option>
@@ -72,14 +72,14 @@
                                 </div>
                                 <div class="row clearfix">
                                     <div class="col-sm-12">
-                                        <form action="/" id="frmFileUpload" class="dropzone" method="post"
+                                        <form action="" id="frmFileUpload" class="dropzone" method="post"
                                             enctype="multipart/form-data">
                                             <div class="dz-message">
                                                 <div class="drag-icon-cph"> <i class="material-icons">touch_app</i> </div>
                                                 <h3>Drop files here or click to upload.</h3>
                                             </div>
                                             <div class="fallback">
-                                                <input name="file" type="file" multiple />
+                                                <input name="file" type="file" @change="handleImageChange" accept="image/*" multiple />
                                             </div>
                                         </form>
                                     </div>
@@ -150,54 +150,68 @@ export default {
                 email: "",
                 phone: "",
                 age: "",
-                gender_id: "",
+                gender: "",
                 biography: "",
                 facebook: "",
                 tweeter: "",
                 linkedin: "",
                 instagram: "",
                 dob: "",
-            },
+                image: "",
 
-            gender: {
-                name: "",
-            }
+            },
         };
     },
 
-    method: {
-        async addAgent() {
-            await axios.post('agent', this.agent).then((res)=> {
-                alert(res.data);
-                console.log(res)
-                this.agent = {
-                    fName: "",
-                    lName: "",
-                    email: "",
-                    phone: "",
-                    age: "",
-                    gender_id: "",
-                    biography: "",
-                    facebook: "",
-                    tweeter: "",
-                    linkedin: "",
-                    instagram: "",
-                    dob: "",
-                };
-            })
+    methods: {
+        handleImageChange(event) {
+            this.agent.image = event.target.files[0];
         },
+        async submitForm(event) {
+            event.preventDefault();
 
-        async Addgender() {
-            await axios.post('gender', this.gender).then((res) => {
-                alert(res.data)
-                console.log(res)
-                this.gender = {
-                    name: "",
-                };
-            })
-        }
+            try {
+                const formData = new FormData();
+                formData.append('fName', this.agent.fName);
+                formData.append('lName', this.agent.lName);
+                formData.append('email', this.agent.email);
+                formData.append('phone', this.agent.phone);
+                formData.append('age', this.agent.age);
+                formData.append('gender', this.agent.gender);
+                formData.append('biography', this.agent.biography);
+                formData.append('facebook', this.agent.facebook);
+                formData.append('tweeter', this.agent.tweeter);
+                formData.append('linkedin', this.agent.linkedin);
+                formData.append('instagram', this.agent.instagram);
+                formData.append('dob', this.agent.dob);
+                formData.append('image', this.agent.image);
+
+                let response;
+
+                if (this.isEditing) {
+                    response = await axios.put(`agent/${this.agent.id}`, formData.append, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    });
+                }
+                else {
+                    response = await axios.post('agent', formData, {
+                        
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                        
+                    });
+                    console.log(response.agent);
+                }
+            } catch (error) {
+                console.error('Error:', error);
+               
+            }
+        },
     },
-}
+};
 </script>
 
 <style></style>

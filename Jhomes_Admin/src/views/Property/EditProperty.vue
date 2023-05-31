@@ -178,6 +178,7 @@ export default {
                 size: "",
                 type: "",
                 garage: "",
+                image_path: "",
             },
         };
         
@@ -198,7 +199,7 @@ export default {
         async updateProperty() {
             let id = this.$route.params.id;
             await axios.put(`property/${id}`, this.property).then((res) => {
-                console.log(res.message);
+                alert(res.data);
                 this.property = {
                     title: "",
                     location: "",
@@ -209,9 +210,11 @@ export default {
                     size: "",
                     type: "",
                     garage: "",
+                    image_path: "",
+
                 };
             });
-            // this.$router.replace("/propertyList")
+            this.$router.replace("/propertyList")
         }
     }
 
