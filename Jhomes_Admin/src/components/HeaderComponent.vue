@@ -10,7 +10,7 @@
           
       </div>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="sign-in.html" class="mega-menu" data-close="true"><i class="zmdi zmdi-power"></i></a></li>
+        <li><router-link to="/login" class="mega-menu" data-close="true"><i class="zmdi zmdi-power"></i></router-link></li>
         <li class=""><a href="javascript:void(0);" class="js-right-sidebar" data-close="true"><i
               class="zmdi zmdi-settings zmdi-hc-spin"></i></a></li>
       </ul>
@@ -20,8 +20,9 @@
 
 <script>
 export default {
-
+ 
 }
+   
 </script>
 
 <style></style>

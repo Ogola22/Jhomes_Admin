@@ -27,7 +27,7 @@
                     <div class="col-lg-12">
                     <div class="card">
                         <div class="header">
-                            <h2><strong>Basic</strong> Information <small>Description text here...</small> </h2>
+                            <h2><strong>Property</strong> Details <small>Property Description...</small> </h2>
 
                         </div>
                         <div class="body">

@@ -33,7 +33,24 @@ const router = createRouter({
       path: '/property/:id/edit',
       name: 'editproperty',
       component:()=> import('../views/Property/EditProperty.vue')
+    },
+    {
+      path: '/login',
+      name: 'login',
+      component:()=> import('../views/Auths/LoginView.vue')
+    },
+    {
+      path: '/register',
+      name: 'register',
+      component:()=> import('../views/Auths/RegisterView.vue')
+    },
+    {
+      path: '/forgotpassword',
+      name: 'forgotpassword',
+      component:()=> import('../views/Auths/ForgotPassword.vue')
     }
+
+
 
   ]
   

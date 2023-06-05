@@ -40,11 +40,9 @@
             <li><a href="contact.html">User</a></li>
           </ul>
         </li>
-        <li> <a href="#" class="menu-toggle"><i class="zmdi zmdi-apps"></i><span>App</span> </a>
-          <ul class="ml-menu">
-            <li><a href="mail-inbox.html">Inbox</a></li>
-            <li><a href="contact.html">Contact list</a></li>
-          </ul>
+        <li> <router-link to="/login" class="zmdi zmdi-accounts-outline"><i class=""></i><span>Login</span> </router-link>
+        </li>
+        <li> <router-link to="/register" class="zmdi zmdi-accounts-outline"><i class=""></i><span>Register</span> </router-link>
         </li>
       </ul>
     </div>
