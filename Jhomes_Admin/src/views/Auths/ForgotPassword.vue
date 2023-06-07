@@ -59,7 +59,7 @@
                         </div>
                     </div>
                     <div class="footer text-center">
-                        <a href="index.html" class="btn l-cyan btn-round btn-lg btn-block waves-effect waves-light">SUBMIT</a>
+                        <button class="btn l-cyan btn-round btn-lg btn-block waves-effect waves-light">SUBMIT</button>
                     </div>
                 </form>
             </div>
@@ -67,13 +67,6 @@
     </div>
     <footer class="footer">
         <div class="container">
-            <nav>
-                <ul>
-                    <li><a href="#">Contact Us</a></li>
-                    <li><a href="#">About Us</a></li>
-                    <li><a href="#">FAQ</a></li>
-                </ul>
-            </nav>
             <div class="copyright">
                 &copy;
                 <span>

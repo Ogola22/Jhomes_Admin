@@ -19,9 +19,9 @@
                 </div>
             </div>
         </div>
-        <div class="container-fluid" v-for="agent in agent" :key="agent.id">
+        <div class="container-fluid" >
             <div class="row clearfix">
-                <div class="col-lg-4 col-md-6">
+                <div class="col-lg-4 col-md-6" v-for="agent in agent" :key="agent.id">
                     <div class="card agent">
                         <div class="agent-avatar"> <a href="profile.html"> <img src="../../src/assets/images/team-5.jpg"
                                     class="img-fluid " alt=""> </a> </div>

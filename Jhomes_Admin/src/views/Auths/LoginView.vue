@@ -48,14 +48,14 @@
                     <div class="content">                                                
                         <div class="input-group input-lg">
                             <input type="email"
-                             class="form-control" placeholder="Email">
+                             class="form-control" v-model="email" placeholder="Email">
                             <span class="input-group-addon">
                                 <i class="zmdi zmdi-account-circle"></i>
                             </span>
                             
                         </div>
                         <div class="input-group input-lg">
-                            <input type="password"
+                            <input type="password" v-model="password"
                              placeholder="Password" class="form-control" />
                             <span class="input-group-addon">
                                 <i class="zmdi zmdi-lock"></i>
@@ -63,7 +63,7 @@
                         </div>
                     </div>
                     <div class="footer text-center">
-                        <a href="index.html" class="btn l-cyan btn-round btn-lg btn-block waves-effect waves-light">SIGN IN</a>
+                        <button class="btn l-cyan btn-round btn-lg btn-block waves-effect waves-light">SIGN IN</button>
                         <h6 class="m-t-20"><router-link to="/forgotpassword" class="link">Forgot Password?</router-link></h6>
                     </div>
                 </form>
@@ -72,13 +72,6 @@
     </div>
    <footer class="footer">
         <div class="container">
-            <nav>
-                <ul>
-                    <li><a href="" target="_blank">Contact Us</a></li>
-                    <li><a href="" target="_blank">About Us</a></li>
-                    <li><a href="#">FAQ</a></li>
-                </ul>
-            </nav>
             <div class="copyright">
                 &copy;
                 <span>
@@ -92,10 +85,26 @@
 </body>
 </template>
 <script>
-
+import axios from 'axios';
 export default {
+    data() {
+        return {
+            email: '',
+            password: '',
+        }
+    },
+    methods: {
+        async handleLogin() {
+            const response = await axios.post('login', {
+                email: this.email,
+                password: this.password,
+            });
 
-
+            localStorage.setItem('token', response.data.token);
+            this.$store.dispatch('user', response.data.user)
+            this.$router.push('/');
+        }
+    }
 }
 
 </script>

@@ -4,16 +4,15 @@
       <ul class="list">
         <li>
           <div class="user-info">
-            <div class="image"><a href="profile.html"><img src="../../src/assets/images/team-5.jpg" alt="User"></a></div>
             <div class="detail">
-              <h4>Brian</h4>
+              <h4 v-if="user">{{ user.name }}</h4>
+              <h6 v-if="!user">You Are Not Logged in</h6>
               <small>Agency Agent</small>
             </div>
             <a href="events.html" title="Events"><i class="zmdi zmdi-calendar"></i></a>
             <a href="mail-inbox.html" title="Inbox"><i class="zmdi zmdi-email"></i></a>
             <a href="contact.html" title="Contact List"><i class="zmdi zmdi-account-box-phone"></i></a>
             <a href="chat.html" title="Chat App"><i class="zmdi zmdi-comments"></i></a>
-            <a href="sign-in.html" title="Sign out"><i class="zmdi zmdi-power"></i></a>
           </div>
         </li>
         <li class="header">MAIN</li>
@@ -29,20 +28,21 @@
           <ul class="ml-menu">
             <li><router-link to="/agents">All Agents</router-link></li>
             <li><router-link to="/addagent">Add Agent</router-link></li>
-            <li><router-link to="/agentprofile">Agent Profile</router-link></li>
-            <li><a href="invoices.html">Agent Invoice</a></li>
           </ul>
         </li>
         <li> <a href="#" class="menu-toggle"><i class="zmdi zmdi-apps"></i><span>Roles</span> </a>
           <ul class="ml-menu">
             <li><a href="mail-inbox.html">Admin</a></li>
             <li><a href="contact.html">Agent</a></li>
-            <li><a href="contact.html">User</a></li>
           </ul>
         </li>
-        <li> <router-link to="/login" class="zmdi zmdi-accounts-outline"><i class=""></i><span>Login</span> </router-link>
+        
+        <li v-if="!user"> 
+          <router-link to="/login" class="zmdi zmdi-accounts-outline"><span>Login</span> </router-link>
+          <router-link to="/register" class="zmdi zmdi-accounts-outline"><span>Register</span> </router-link>
         </li>
-        <li> <router-link to="/register" class="zmdi zmdi-accounts-outline"><i class=""></i><span>Register</span> </router-link>
+        <li v-if="user"> 
+          <a href="javascript:void(0)" @click="handleLogout" class="zmdi zmdi-accounts-outline"><span>Logout</span> </a>
         </li>
       </ul>
     </div>
@@ -50,8 +50,23 @@
 </template>
 
 <script>
+import axios from 'axios';
+import { mapGetters } from 'vuex'
 export default {
-
+  
+  async created() {
+    const response = await axios.get('user');
+    this.$store.dispatch('user', response.data)
+  },
+  methods: {
+    async handleLogout() {
+      localStorage.removeItem('token');
+      this.$router.push('/')
+    }
+  },
+  computed: {
+    ...mapGetters(['user']),
+  },
 }
 </script>
 
