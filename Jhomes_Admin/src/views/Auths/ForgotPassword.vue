@@ -42,7 +42,7 @@
     <div class="container">
         <div class="col-md-12 content-center">
             <div class="card-plain">
-                <form class="form" method="" action="">
+                <form class="form" method="" action="" @submit.prevent="handleSubmit">
                     <div class="header">
                         <div class="logo-container">
                             <img src="/icon-deal.png" alt="">
@@ -52,7 +52,7 @@
                     </div>
                     <div class="content">
                         <div class="input-group input-lg">
-                            <input type="text" class="form-control" placeholder="Enter Email">
+                            <input type="text" class="form-control" v-model="email" placeholder="Enter Email">
                             <span class="input-group-addon">
                                 <i class="zmdi zmdi-email"></i>
                             </span>
@@ -81,7 +81,22 @@
 </template>
 
 <script>
+import axios from 'axios';
 export default {
+    data() {
+        return {
+            email: '',
+        }
+    },
+    methods: {
+        async handleSubmit() {
+            const response = await axios.post('forgot-password', {
+                email: this.email
+            });
+
+            console.log(response);
+        }
+    }
 
 }
 </script>

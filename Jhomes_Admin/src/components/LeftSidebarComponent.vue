@@ -6,7 +6,7 @@
           <div class="user-info">
             <div class="detail">
               <h4 v-if="user">{{ user.name }}</h4>
-              <h6 v-if="!user">You Are Not Logged in</h6>
+              <h6 v-if="!user">JHOMES LTD</h6>
               <small>Agency Agent</small>
             </div>
             <a href="events.html" title="Events"><i class="zmdi zmdi-calendar"></i></a>
@@ -32,8 +32,7 @@
         </li>
         <li> <a href="#" class="menu-toggle"><i class="zmdi zmdi-apps"></i><span>Roles</span> </a>
           <ul class="ml-menu">
-            <li><a href="mail-inbox.html">Admin</a></li>
-            <li><a href="contact.html">Agent</a></li>
+            <li><router-link to="/roles">Role Management</router-link></li>
           </ul>
         </li>
         
@@ -51,22 +50,27 @@
 
 <script>
 import axios from 'axios';
-import { mapGetters } from 'vuex'
 export default {
-  
+  data() {
+    return {
+      user: null
+    }
+  },
   async created() {
     const response = await axios.get('user');
-    this.$store.dispatch('user', response.data)
+
+    this.user = response.data
+    
   },
   methods: {
     async handleLogout() {
-      localStorage.removeItem('token');
-      this.$router.push('/')
+      if (confirm('Are you sure to Logout?')) {
+        localStorage.removeItem('token');
+      }
     }
+    
   },
-  computed: {
-    ...mapGetters(['user']),
-  },
+  
 }
 </script>
 

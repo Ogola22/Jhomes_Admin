@@ -24,6 +24,7 @@
         <div class="container-fluid">
             <div class="row clearfix">
                 <form @submit.prevent="updateProperty()" action="">
+                    <error v-if="error" :error="error"/>
                     <div class="col-lg-12">
                         <div class="card">
                             <div class="header">
@@ -34,27 +35,23 @@
                                 <div class="row clearfix">
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="property" class="form-label"
-                                                >Property Title</label>
+                                            <label for="property" class="form-label">Property Title</label>
                                             <input type="text" class="form-control" v-model="property.title">
                                         </div>
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="property" class="form-label"
-                                                >Location</label>
-                                            <input type="text" class="form-control" v-model="property.location"
-                                               >
+                                            <label for="property" class="form-label">Location</label>
+                                            <input type="text" class="form-control" v-model="property.location">
 
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
                                         <div class="form-group">
                                             <div class="form-line">
-                                                <label for="property" class="form-label"
-                                                >Description</label>
+                                                <label for="property" class="form-label">Description</label>
                                                 <textarea rows="4" class="form-control no-resize"
-                                                v-model="property.desc"></textarea>
+                                                    v-model="property.desc"></textarea>
                                             </div>
                                         </div>
                                     </div>
@@ -71,8 +68,8 @@
                                     <div class="col-xs-12 col-sm-6">
                                         <div class="form-group">
                                             <label for="itemN-23">Property Type</label>
-                                            <select data-placeholder="Select Option" class="chosen-select" id="itemN-23" v-model="property.type"
-                                               >
+                                            <select data-placeholder="Select Option" class="chosen-select" id="itemN-23"
+                                                v-model="property.type">
                                                 <option value="1">Villa</option>
                                                 <option value="2">Apartment</option>
                                                 <option value="2">Home</option>
@@ -82,10 +79,8 @@
                                     </div>
                                     <div class="col-sm-6">
                                         <div class="form-group">
-                                            <label for="property" class="form-label"
-                                                >Price</label>
-                                            <input type="text" class="form-control" v-model="property.price"
-                                              >
+                                            <label for="property" class="form-label">Price</label>
+                                            <input type="text" class="form-control" v-model="property.price">
                                         </div>
                                     </div>
                                     <div class="col-sm-12">
@@ -98,34 +93,26 @@
                                 <div class="row clearfix">
                                     <div class="col-lg-3 col-dm-3 col-sm-6">
                                         <div class="form-group">
-                                            <label for="property" class="form-label"
-                                                >Bedrooms</label>
-                                            <input type="text" class="form-control" v-model="property.bedroom"
-                                                >
+                                            <label for="property" class="form-label">Bedrooms</label>
+                                            <input type="text" class="form-control" v-model="property.bedroom">
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-dm-3 col-sm-6">
                                         <div class="form-group">
-                                            <label for="property" class="form-label"
-                                                >Size</label>
-                                            <input type="text" class="form-control" v-model="property.size"
-                                              >
+                                            <label for="property" class="form-label">Size</label>
+                                            <input type="text" class="form-control" v-model="property.size">
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-dm-3 col-sm-6">
                                         <div class="form-group">
-                                            <label for="property" class="form-label"
-                                                >Parking Space</label>
-                                            <input type="text" class="form-control" v-model="property.garage"
-                                               >
+                                            <label for="property" class="form-label">Parking Space</label>
+                                            <input type="text" class="form-control" v-model="property.garage">
                                         </div>
                                     </div>
                                     <div class="col-lg-3 col-dm-3 col-sm-6">
                                         <div class="form-group">
-                                            <label for="property" class="form-label"
-                                                >Bathrooms</label>
-                                            <input type="text" class="form-control" v-model="property.bathroom"
-                                            >
+                                            <label for="property" class="form-label">Bathrooms</label>
+                                            <input type="text" class="form-control" v-model="property.bathroom">
                                         </div>
                                     </div>
                                 </div>
@@ -163,7 +150,11 @@
 
 <script>
 import axios from 'axios';
+import Error from '../../components/ErrorComponent.vue'
 export default {
+    components: {
+        Error
+    },
     data() {
         return {
             property: {
@@ -177,42 +168,54 @@ export default {
                 type: "",
                 garage: "",
                 image_path: "",
+                error: '',
             },
         };
-        
+
     },
-    created(){
-        this.getProperty()   
+    created() {
+        this.getProperty()
     },
 
     methods: {
         async getProperty() {
-            let id = this.$route.params.id;
-            await axios.get(`property/${id}`).then((res) => {
-                this.property = res.data;
-                console.log(res.data)
-            });
+            try {
+                let id = this.$route.params.id;
+                await axios.get(`property/${id}`).then((res) => {
+                    this.property = res.data;
+                    console.log(res.data)
+                });
+            } catch (e) {
+                this.error = 'Login to perform this action'
+            }
+
         },
 
         async updateProperty() {
-            let id = this.$route.params.id;
-            await axios.put(`property/${id}`, this.property).then((res) => {
-                alert(res.data);
-                this.property = {
-                    title: "",
-                    location: "",
-                    desc: "",
-                    price: "",
-                    bedroom: "",
-                    bathroom: "",
-                    size: "",
-                    type: "",
-                    garage: "",
-                    image_path: "",
+            try {
+                let id = this.$route.params.id;
+                await axios.put(`property/${id}`, this.property).then((res) => {
+                    alert(res.data);
+                    this.property = {
+                        title: "",
+                        location: "",
+                        desc: "",
+                        price: "",
+                        bedroom: "",
+                        bathroom: "",
+                        size: "",
+                        type: "",
+                        garage: "",
+                        image_path: "",
 
-                };
-            });
-            this.$router.replace("/propertyList")
+                    };
+                });
+                this.$router.replace("/propertyList")
+            } catch (e) {
+                this.error = 'Login to perform this action'
+            }
+
+           
         }
     }
 
