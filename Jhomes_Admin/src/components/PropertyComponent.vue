@@ -60,7 +60,7 @@
 import axios from 'axios';
 export default {
     props: ["property"],
-    emits: ['delete-crop'],
+    emits: ['delete-property'],
     methods: {
          deleteProperty(id) {
             if (confirm("Sure to delete this Property?")) {

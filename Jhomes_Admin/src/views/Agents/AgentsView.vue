@@ -9,7 +9,7 @@ export default {
     components: { AgentComponent },
     data() {
         return {
-            agent: [],
+            agent: []
         };
     },
     created() {

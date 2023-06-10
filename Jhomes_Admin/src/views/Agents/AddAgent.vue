@@ -204,11 +204,12 @@ export default {
                         
                     });
                     console.log(response.agent);
+                   
                 }
             } catch (error) {
                 console.error('Error:', error);
                
-            }
+            } this.$router.puch('/agents')
         },
     },
 };

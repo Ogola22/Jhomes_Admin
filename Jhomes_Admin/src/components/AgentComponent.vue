@@ -23,8 +23,7 @@
             <div class="row clearfix">
                 <div class="col-lg-4 col-md-6" v-for="agent in agent" :key="agent.id">
                     <div class="card agent">
-                        <div class="agent-avatar"> <a href="profile.html"> <img src="../../src/assets/images/team-5.jpg"
-                                    class="img-fluid " alt=""> </a> </div>
+                        <div class="agent-avatar"> <img :src="agent.image" class="img-fluid " alt=""></div>
                         <div class="agent-content">
                             <div class="agent-name">
                                 <h4><a href="profile.html">{{ agent.fname }}</a></h4>

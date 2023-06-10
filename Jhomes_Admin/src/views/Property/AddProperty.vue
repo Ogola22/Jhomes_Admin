@@ -68,10 +68,10 @@
                                         <label for="itemN-23">Property Type</label>
                                         <select data-placeholder="Select Option" class="chosen-select" id="itemN-23"
                                             v-model="property.type">
-                                            <option value="1">Villa</option>
-                                            <option value="2">Apartment</option>
-                                            <option value="2">Home</option>
-                                            <option value="2">Office</option>
+                                            <option value="Villa">Villa</option>
+                                            <option value="Apartment">Apartment</option>
+                                            <option value="Home">Home</option>
+                                            <option value="Office">Office</option>
                                         </select>
                                     </div>
                                 </div>
