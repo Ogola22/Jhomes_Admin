@@ -16,7 +16,7 @@
           </div>
         </li>
         <li class="header">MAIN</li>
-        <li class="active open"><router-link to="/admin"><i class="zmdi zmdi-home"></i><span>Dashboard</span></router-link></li>
+        <li class="active open"><router-link to="/"><i class="zmdi zmdi-home"></i><span>Dashboard</span></router-link></li>
         <li><a href="javascript:void(0);" class="menu-toggle"><i class="zmdi zmdi-city"></i><span>Property</span> </a>
           <ul class="ml-menu">
             <li><router-link to="/propertylist">Property List</router-link></li>

@@ -10,9 +10,9 @@
                             <div class="row">
                                 <div class="col-lg-4 col-md-6">
                                     <div class="property_image">
-                                        <img class="img-thumbnail img-fluid" src="../../src/assets/images/property-1.jpg"
-                                            alt="img">
-                                        <span class="badge badge-danger">{{ property.id }}</span>
+                                        <img class="img-thumbnail img-fluid" src="../assets/images/property-1.jpg"
+                                            alt="property image">
+                                        <span class="badge badge-danger">{{ property.property_for }}</span>
                                     </div>
                                 </div>
                                 <div class="col-lg-8 col-md-6">

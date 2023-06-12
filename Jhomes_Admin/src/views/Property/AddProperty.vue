@@ -23,7 +23,7 @@
         </div>
         <div class="container-fluid">
             <div class="row clearfix">
-                <form @submit.prevent="addProperty()" action="">
+                <form @submit.prevent="submitForm" action="">
                     <div class="col-lg-12">
                     <div class="card">
                         <div class="header">
@@ -72,6 +72,16 @@
                                             <option value="Apartment">Apartment</option>
                                             <option value="Home">Home</option>
                                             <option value="Office">Office</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="col-xs-12 col-sm-6">
+                                    <div class="form-group">
+                                        <label for="itemN-23">Property For</label>
+                                        <select data-placeholder="Select Option" class="chosen-select" id="itemN-23"
+                                            v-model="property.property_for">
+                                            <option value="For Sale">For Sale</option>
+                                            <option value="For Rent">For Rent</option>
                                         </select>
                                     </div>
                                 </div>
@@ -128,9 +138,12 @@
                                             <h3>Drop files here or click to upload.</h3>
                                         </div>
                                         <div class="fallback">
-                                            <input name="file" type="file" multiple />
+                                            <input name="file" type="file" @change="handleImageChange" accept="image/*" multiple />
+                                           
                                         </div>
+                                           
                                     </form>
+                                    <img :src="property.imagePreview" alt="">
                                 </div>
                                 <div class="col-sm-12">
                                     <button type="submit" class="btn btn-primary btn-round">Submit</button>
@@ -153,6 +166,7 @@ export default {
     data() {
         return {
             property: {
+                imagePreview: null,
                 title: "",
                 location: "",
                 desc: "",
@@ -161,30 +175,89 @@ export default {
                 bathroom: "",
                 size: "",
                 type: "",
+                property_for:"",
                 garage: "",
+                image: ""
             },
         };
     },
 
     methods: {
-        async addProperty() {
-            await axios.post('property', this.property).then((res) => {
-                alert(res.data);
-                console.log(res);
-                this.property = {
-                    title: "",
-                    location: "",
-                    desc: "",
-                    price: "",
-                    bedroom: "",
-                    bathroom: "",
-                    size: "",
-                    type: "",
-                    garage: "",
-                };
-            });
-            this.$router.replace("/propertyList")
+        handleImageChange(event) {
+            this.property.image = event.target.files[0];
+            let reader = new FileReader();
+            reader.addEventListener("load", function () {
+                this.showPreview = true;
+                this.imagePreview = reader.result;
+
+
+            }.bind(this), false);
+            if (this.form.image) {
+                if (/\.(jpg?g|gif)$/i.test(this.form.image.name)) {
+                    reader.readAsDataURL(this.form.image);
+                }
+            }
         },
+        async submitForm(event) {
+            event.preventDefault();
+
+            try {
+                const formData = new FormData();
+                formData.append('title', this.property.title);
+                formData.append('location', this.property.location);
+                formData.append('desc', this.property.desc);
+                formData.append('price', this.property.price);
+                formData.append('bedroom', this.property.bedroom);
+                formData.append('bathroom', this.property.bathroom);
+                formData.append('size', this.property.size);
+                formData.append('type', this.property.type);
+                formData.append('property_for', this.property.property_for);
+                formData.append('garage', this.property.garage);
+                formData.append('image', this.property.image);
+                let response;
+
+                if (this.isEditing) {
+                    response = await axios.put(`property/${this.property.id}`, formData.append, {
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                    });
+                }
+                else {
+                    response = await axios.post('property', formData, {
+                        
+                        headers: {
+                            'Content-Type': 'multipart/form-data',
+                        },
+                        
+                    });
+                    console.log(response.property);
+                   
+                }
+            } catch (error) {
+                console.error('Error:', error);
+               
+            } this.$router.push('/propertyList')
+        },
+        // async addProperty() {
+        //     await axios.post('property', this.property).then((res) => {
+        //         alert(res.data);
+        //         console.log(res);
+        //         this.property = {
+        //             title: "",
+        //             location: "",
+        //             desc: "",
+        //             price: "",
+        //             bedroom: "",
+        //             bathroom: "",
+        //             size: "",
+        //             type: "",
+        //             property_for:"",
+        //             garage: ""
+        //         };
+        //     });
+        //     this.$router.replace("/propertyList")
+        // },
     }
 };
 </script>
