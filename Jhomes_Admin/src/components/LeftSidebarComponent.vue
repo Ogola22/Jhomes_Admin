@@ -9,10 +9,10 @@
               <h6 v-if="!user">JHOMES LTD</h6>
               <small>Agency Agent</small>
             </div>
-            <a href="events.html" title="Events"><i class="zmdi zmdi-calendar"></i></a>
-            <a href="mail-inbox.html" title="Inbox"><i class="zmdi zmdi-email"></i></a>
-            <a href="contact.html" title="Contact List"><i class="zmdi zmdi-account-box-phone"></i></a>
-            <a href="chat.html" title="Chat App"><i class="zmdi zmdi-comments"></i></a>
+            <a href="javascript:void(0);" title="Events"><i class="zmdi zmdi-calendar"></i></a>
+            <a href="javascript:void(0);" title="Inbox"><i class="zmdi zmdi-email"></i></a>
+            <a href="javascript:void(0);" title="Contact List"><i class="zmdi zmdi-account-box-phone"></i></a>
+            <a href="javascript:void(0);" title="Chat App"><i class="zmdi zmdi-comments"></i></a>
           </div>
         </li>
         <li class="header">MAIN</li>
@@ -41,7 +41,7 @@
           <router-link to="/register" class="zmdi zmdi-accounts-outline"><span>Register</span> </router-link>
         </li>
         <li v-if="user"> 
-          <a href="javascript:void(0)" @click="handleLogout" class="zmdi zmdi-accounts-outline"><span>Logout</span> </a>
+          <a href="javascript:void(0)" @click="handleClick()" class="zmdi zmdi-accounts-outline"><span>Logout</span> </a>
         </li>
       </ul>
     </div>
@@ -53,7 +53,8 @@ import axios from 'axios';
 export default {
   data() {
     return {
-      user: null
+      user: null,
+      currentTime: new Date().toLocaleTimeString()
     }
   },
   async created() {
@@ -63,11 +64,18 @@ export default {
     
   },
   methods: {
+    async handleClick() {
+      this.handleLogout();
+      this.refreshPage();
+    },
     async handleLogout() {
       if (confirm('Are you sure to Logout?')) {
         localStorage.removeItem('token');
       }
-    }
+    },
+    async refreshPage() {
+      location.reload();
+    },
     
   },
   

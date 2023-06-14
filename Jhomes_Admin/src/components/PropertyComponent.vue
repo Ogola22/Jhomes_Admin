@@ -2,6 +2,7 @@
     <!-- Main Content -->
 
     <section class="content home">
+        <error v-if="error" :error="error"/>
         <div class="container-fluid">
             <div class="row clearfix">
                 <div class="col-lg-12">
@@ -58,21 +59,30 @@
 
 <script>
 import axios from 'axios';
+import Error from '../components/ErrorComponent.vue';
 export default {
+    components: {
+        Error
+    },
     props: ["property"],
     emits: ['delete-property'],
+   
     methods: {
-         deleteProperty(id) {
-            if (confirm("Sure to delete this Property?")) {
+        deleteProperty(id) {
+            try {
+                if (confirm("Sure to delete this Property?")) {
                  axios
                     .delete(`property/${id}`)
                     .then(res => {
                         console.log(res);
                     }) 
-            }  this.$router.replace("/propertyList")     
+                 }this.$router.replace("/propertyList")   
+                
+            }catch (e) {
+                this.error = 'Login to perform this action'
+            }
+        }
     }
-  }
-
 }
 </script>
 

@@ -214,8 +214,6 @@ export default {
             } catch (e) {
                 this.error = 'Login to perform this action'
             }
-
-           
         }
     }
 
