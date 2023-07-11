@@ -32,7 +32,7 @@
                         </li>
                     </ul>
                 </div>
-            </div>
+            </div> 
         </nav>
         <!-- End Navbar -->
         <div class="page-header">

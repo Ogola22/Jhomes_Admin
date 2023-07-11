@@ -23,7 +23,7 @@
         </div>
         <div class="container-fluid">
             <div class="row clearfix">
-                <form @submit.prevent="submitForm()" action="">
+                <form @submit.prevent="submitForm" action="">
                     <error v-if="error" :error="error" />
                     <div class="col-lg-12">
                         <div class="card">
@@ -189,6 +189,23 @@ export default {
     },
 
     methods: {
+        handleImageChange(event) {
+
+            this.property.image = event.target.files[0];
+            let reader = new FileReader();
+            reader.addEventListener("load", function () {
+                this.showPreview = true;
+                this.imagePreview = reader.result;
+
+
+            }.bind(this), false);
+            if (this.form.image) {
+                if (/\.(jpg?g|gif)$/i.test(this.form.image.name)) {
+                    reader.readAsDataURL(this.form.image);
+                }
+            }
+
+        },
         async submitForm() {
             try {
                 const formData = new FormData();
@@ -220,7 +237,7 @@ export default {
                         },
 
                     });
-                    
+
                     console.log(response.property);
 
                 }
@@ -228,27 +245,11 @@ export default {
 
             } catch (e) {
                 this.error = 'Login to perform this action'
-            }this.$router.push('/propertyList')
+            } this.$router.push('/propertyList')
         },
 
-        handleImageChange(event) {
-        
-                this.property.image = event.target.files[0];
-                let reader = new FileReader();
-                reader.addEventListener("load", function () {
-                    this.showPreview = true;
-                    this.imagePreview = reader.result;
 
 
-                }.bind(this), false);
-                if (this.form.image) {
-                    if (/\.(jpg?g|gif)$/i.test(this.form.image.name)) {
-                        reader.readAsDataURL(this.form.image);
-                    }
-                }
-           
-        },
-        
         // async addProperty() {
         //     await axios.post('property', this.property).then((res) => {
         //         alert(res.data);
